@@ -1,0 +1,19 @@
+﻿@{ ViewBag.Title = "邮件作业"; }
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnCreateDailySendEmail").on('click', function () {
+                InsertIntoTable("/Email/DailyForSendEmail");
+            })
+        })
+    </script>
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-md-4">
+        <p><a id="btnCreateDailySendEmail" class="btn btn-success" href="javascript:void(0)">每天[3:00]执行发送邮件</a></p>
+    </div>
+</div>
+

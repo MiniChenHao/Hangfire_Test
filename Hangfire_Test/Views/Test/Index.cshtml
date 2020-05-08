@@ -1,0 +1,25 @@
+﻿@{ ViewBag.Title = "测试作业"; }
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnCreateConsoleJob").on('click', function () {
+                InsertIntoTable("/Test/MinutelyForConsoleJob");
+            })
+        })
+    </script>
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-md-4">
+        <h3>消息测试</h3>
+        <p><a class="btn btn-success" href="javascript:void(0)" onclick="swal({ title: '成功', text: '任务添加成功', icon: 'success', button: '确定' });">成功消息</a></p>
+        <p><a class="btn btn-danger" href="javascript:void(0)" onclick="swal({ title: '错误', text: '文本', icon: 'error', button: '确定' });">错误消息</a></p>
+    </div>
+    <div class="col-md-4">
+        <h3>作业测试</h3>
+        <p><a id="btnCreateConsoleJob" class="btn btn-success" href="javascript:void(0)">每分钟执行测试</a></p>
+    </div>
+</div>
+
