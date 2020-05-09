@@ -1,5 +1,6 @@
 ﻿using Hangfire;
 using Hangfire.Console;
+using Hangfire.Dashboard;
 using Microsoft.Owin;
 using Owin;
 
@@ -13,7 +14,21 @@ namespace Hangfire_Test
         {
             // 有关如何配置应用程序的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=316888
             GlobalConfiguration.Configuration.UseSqlServerStorage("ShenOnlineJob").UseConsole();
-            app.UseHangfireDashboard();
+            
+            BasicAuthAuthorizationFilter filter = new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions
+            {
+                SslRedirect = false,//是否将所有非SSL请求重定向到SSL URL
+                RequireSsl = false,//需要SSL连接才能访问HangFire Dahsboard。强烈建议在使用基本身份验证时使用SSL
+                LoginCaseSensitive = true,//登录检查是否区分大小写
+                Users = new[] {
+                    new BasicAuthAuthorizationUser {
+                        Login = "Admin",
+                        PasswordClear = "123456"
+                    }
+                }
+            });
+            DashboardOptions options = new DashboardOptions { Authorization = new[] { filter } };
+            app.UseHangfireDashboard("/Hangfire", options);
             app.UseHangfireServer();
         }
     }

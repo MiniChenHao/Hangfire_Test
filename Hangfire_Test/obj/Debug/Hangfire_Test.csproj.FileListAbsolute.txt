@@ -90,6 +90,7 @@ G:\GitHubObject\Hangfire_Test\Hangfire_Test\bin\zh-Hans\System.Web.Razor.resourc
 G:\GitHubObject\Hangfire_Test\Hangfire_Test\bin\zh-Hans\System.Web.WebPages.resources.dll
 G:\GitHubObject\Hangfire_Test\Hangfire_Test\bin\zh-Hans\System.Web.WebPages.Deployment.resources.dll
 G:\GitHubObject\Hangfire_Test\Hangfire_Test\bin\zh-Hans\System.Web.WebPages.Razor.resources.dll
-G:\GitHubObject\Hangfire_Test\Hangfire_Test\obj\Debug\Hangfire_Test.csprojResolveAssemblyReference.cache
 G:\GitHubObject\Hangfire_Test\Hangfire_Test\obj\Debug\Hangfire_Test.dll
 G:\GitHubObject\Hangfire_Test\Hangfire_Test\obj\Debug\Hangfire_Test.pdb
+G:\GitHubObject\Hangfire_Test\Hangfire_Test\bin\Hangfire.Dashboard.Authorization.dll
+G:\GitHubObject\Hangfire_Test\Hangfire_Test\bin\Hangfire.Dashboard.Authorization.xml
