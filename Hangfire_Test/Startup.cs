@@ -14,7 +14,6 @@ namespace Hangfire_Test
         {
             // 有关如何配置应用程序的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=316888
             GlobalConfiguration.Configuration.UseSqlServerStorage("ShenOnlineJob").UseConsole();
-            
             BasicAuthAuthorizationFilter filter = new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions
             {
                 SslRedirect = false,//是否将所有非SSL请求重定向到SSL URL
@@ -23,6 +22,8 @@ namespace Hangfire_Test
                 Users = new[] {
                     new BasicAuthAuthorizationUser {
                         Login = "Admin",
+                        // Password as SHA1 hash
+                        // Password = new byte[] { 0x7c,0x4a,0x8d,0x09,0xca,0x37,0x62,0xaf,0x61,0xe5,0x95,0x20,0x94,0x3d,0xc2,0x64,0x94,0xf8,0x94,0x1b }//密码
                         PasswordClear = "123456"
                     }
                 }
