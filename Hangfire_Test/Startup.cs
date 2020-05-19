@@ -43,7 +43,7 @@ namespace Hangfire_Test
             });
             DashboardOptions options = new DashboardOptions { Authorization = new[] { filter } };
             app.UseHangfireDashboard("/Hangfire", options);
-            app.UseHangfireServer();
+            //app.UseHangfireServer();
         }
     }
 }
