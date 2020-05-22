@@ -4,6 +4,7 @@ using Hangfire.Dashboard;
 using Hangfire.SqlServer;
 using Microsoft.Owin;
 using Owin;
+using System;
 
 [assembly: OwinStartup(typeof(Hangfire_Test.Startup))]
 
@@ -14,20 +15,36 @@ namespace Hangfire_Test
         public void Configuration(IAppBuilder app)
         {
             // 有关如何配置应用程序的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=316888
-            GlobalConfiguration.Configuration.UseSqlServerStorage("ShenOnlineJob").UseConsole();
+            GlobalConfiguration.Configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage("ShenOnlineJob", new SqlServerStorageOptions()
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true
+                })
+                .UseConsole();
 
-            GlobalConfiguration.Configuration.UseDashboardMetric(DashboardMetrics.ServerCount);
-            GlobalConfiguration.Configuration.UseDashboardMetric(SqlServerStorage.ActiveConnections);
-            GlobalConfiguration.Configuration.UseDashboardMetric(SqlServerStorage.TotalConnections);
-            GlobalConfiguration.Configuration.UseDashboardMetric(DashboardMetrics.RecurringJobCount);
-            GlobalConfiguration.Configuration.UseDashboardMetric(DashboardMetrics.RetriesCount);
-            GlobalConfiguration.Configuration.UseDashboardMetric(DashboardMetrics.AwaitingCount);
-            GlobalConfiguration.Configuration.UseDashboardMetric(DashboardMetrics.EnqueuedAndQueueCount);
-            GlobalConfiguration.Configuration.UseDashboardMetric(DashboardMetrics.ScheduledCount);
-            GlobalConfiguration.Configuration.UseDashboardMetric(DashboardMetrics.ProcessingCount);
-            GlobalConfiguration.Configuration.UseDashboardMetric(DashboardMetrics.SucceededCount);
-            GlobalConfiguration.Configuration.UseDashboardMetric(DashboardMetrics.FailedCount);
-            GlobalConfiguration.Configuration.UseDashboardMetric(DashboardMetrics.DeletedCount);
+            GlobalConfiguration.Configuration
+                .UseDashboardMetric(DashboardMetrics.AwaitingCount)
+                .UseDashboardMetric(DashboardMetrics.DeletedCount)
+                .UseDashboardMetric(DashboardMetrics.EnqueuedAndQueueCount)
+                .UseDashboardMetric(DashboardMetrics.EnqueuedCountOrNull)
+                .UseDashboardMetric(DashboardMetrics.FailedCount)
+                .UseDashboardMetric(DashboardMetrics.FailedCountOrNull)
+                .UseDashboardMetric(DashboardMetrics.ProcessingCount)
+                .UseDashboardMetric(DashboardMetrics.RecurringJobCount)
+                .UseDashboardMetric(DashboardMetrics.RetriesCount)
+                .UseDashboardMetric(DashboardMetrics.ScheduledCount)
+                .UseDashboardMetric(DashboardMetrics.ServerCount)
+                .UseDashboardMetric(DashboardMetrics.SucceededCount)
+                .UseDashboardMetric(SqlServerStorage.ActiveConnections)
+                .UseDashboardMetric(SqlServerStorage.TotalConnections);
 
             BasicAuthAuthorizationFilter filter = new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions
             {
